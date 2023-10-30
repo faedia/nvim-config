@@ -1,17 +1,39 @@
-vim.opt.guicursor = ""
+-- Basic sets for vim config
+vim.opt.guicursor = ''
 
-vim.opt.nu = true
-vim.opt.relativenumber = true
+-- set highlight search
+vim.o.hlsearch = false
 
+-- set line number
+vim.wo.number = true
+vim.wo.relativenumber = true
+
+--set default tab and indent options
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
-
 vim.opt.smartindent = true
 
-vim.opt.swapfile = false
+-- enable mouse
+vim.o.mouse = 'a'
 
-vim.opt.incsearch = true
+-- TODO: enable clipboard
 
-vim.opt.termguicolors = true
+
+-- enable break indent
+vim.o.breakindent = true
+
+-- save undo history
+vim.o.undofile = true
+
+-- TODO: decide on search case insensitivity
+
+-- keep sign column on
+vim.wo.signcolumn = 'yes'
+
+-- enable terminal colours
+vim.o.termguicolors = true
+
+-- set colorscheme
+vim.cmd.colorscheme 'catppuccin'

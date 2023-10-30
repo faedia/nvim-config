@@ -21,7 +21,12 @@ local on_attach = function(_, bufnr)
 	nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
 	-- TODO: telescope sets for lsp
-	
+	nmap('gd', t_builtin.lsp_definitions, '[G]oto [D]efinition')
+	nmap('gr', t_builtin.lsp_references, '[G]oto [R]eferences')
+	nmap('gI', t_builtin.lsp_implementations, '[G]oto [I]mplementation')
+	nmap('<leader>D', t_builtin.lsp_type_definitions, 'Type [D]efinition')
+	nmap('<leader>ds', t_builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
+	nmap('<leader>ws', t_builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
 	-- setup basic keymaps
 	nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -100,8 +105,7 @@ cmp.setup {
 		},
 	},
 	sources = {
-		{name = 'nvim_lsp'},
-		{name = 'luasnip'},
+		{ name = 'nvim_lsp' },
+		{ name = 'luasnip' },
 	},
 }
-

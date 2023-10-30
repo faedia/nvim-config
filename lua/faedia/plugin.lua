@@ -6,6 +6,10 @@ require('lazy').setup({
 		priority = 1000,
 	},
 
+	-- add git support
+	'tpope/vim-fugitive',
+	'tpope/vim-rhubarb',
+
 	-- detect tabstop and shiftwidth
 	'tpope/vim-sleuth',
 
@@ -44,6 +48,12 @@ require('lazy').setup({
 		opts = {},
 	},
 
+	-- adds git signs into gutter
+	{
+		'lewis6991/gitsigns.nvim',
+		opts = {},
+	},
+
 	-- add lualine
 	{
 		'nvim-lualine/lualine.nvim',
@@ -57,6 +67,12 @@ require('lazy').setup({
 		opts = {},
 	},
 
+	-- add comment utilities
+	{
+		'numToStr/Comment.nvim',
+		opts = {},
+	},
+
 	-- telescope fuzzy finding
 	{
 		'nvim-telescope/telescope.nvim',
@@ -65,11 +81,18 @@ require('lazy').setup({
 			'nvim-lua/plenary.nvim',
 			{
 				'nvim-telescope/telescope-fzf-native.nvim',
-				build = 'make',
-				cond = function ()
-					return vim.fn.executable 'make' == 1
-				end,
+				build =
+				'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
 			},
 		},
+	},
+
+	-- add treesitter. Better highlight, edit and code navigation
+	{
+		'nvim-treesitter/nvim-treesitter',
+		dependencies = {
+			'nvim-treesitter/nvim-treesitter-textobjects',
+		},
+		build = ':TSUpdate',
 	},
 }, {})

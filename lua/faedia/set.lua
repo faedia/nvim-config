@@ -41,3 +41,5 @@ vim.cmd.colorscheme 'catppuccin'
 -- reduce update time for performance
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
+
+vim.o.cursorline = true

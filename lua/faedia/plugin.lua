@@ -57,7 +57,11 @@ require('lazy').setup({
 	-- add lualine
 	{
 		'nvim-lualine/lualine.nvim',
-		opts = {}
+		opts = {},
+		dependencies = {
+			'nvim-tree/nvim-web-devicons',
+			opts = {},
+		},
 	},
 
 	-- add indentation guides
@@ -102,7 +106,7 @@ require('lazy').setup({
 		cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
 		build = "cd app && yarn install",
 		init = function()
-			vim.g.mkdp_filetypes = {"markdown"}
+			vim.g.mkdp_filetypes = { "markdown" }
 		end,
 		ft = { 'markdown' },
 	},

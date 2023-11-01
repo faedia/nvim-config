@@ -37,3 +37,7 @@ vim.o.termguicolors = true
 
 -- set colorscheme
 vim.cmd.colorscheme 'catppuccin'
+
+-- reduce update time for performance
+vim.o.updatetime = 250
+vim.o.timeoutlen = 300

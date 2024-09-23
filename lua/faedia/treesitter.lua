@@ -2,6 +2,9 @@
 vim.defer_fn(function()
 	require('nvim-treesitter.configs').setup {
 		ensure_installed = { 'c', 'cpp', 'lua', 'python', 'rust', 'vim' },
+		modules = {},
+		sync_install = false,
+		ignore_install = {},
 		auto_install = true,
 		highlight = { enable = true },
 		incremental_selection = {

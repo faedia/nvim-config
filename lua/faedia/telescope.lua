@@ -21,7 +21,7 @@ vim.keymap.set('n', '<leader><space>', builtin.buffers, { desc = '[ ] Find exist
 vim.keymap.set('n', '<leader>/', function()
 	builtin.current_buffer_fuzzy_find(themes.get_dropdown {
 		winblend = 10,
-		previewer = false,
+		previewer = true,
 	})
 end, { desc = '[/] Fuzzy search in current buffer' })
 

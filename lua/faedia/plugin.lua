@@ -110,4 +110,11 @@ require('lazy').setup({
 		end,
 		ft = { 'markdown' },
 	},
+
+	-- add a better file tree.
+	{
+		'stevearc/oil.nvim',
+		opts = {},
+		lazy = false,
+	},
 }, {})

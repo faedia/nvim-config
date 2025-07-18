@@ -2,9 +2,9 @@
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic list' })
 
 local t_builtin = require 'telescope.builtin'
+vim.keymap.set('n', '<leader>q', t_builtin.diagnostics, { desc = 'Open diagnostic list'})
 
 -- configure LSP
 -- this gets run when an LSP connects to a buffer
@@ -46,14 +46,25 @@ end
 
 -- setup mason
 require('mason').setup()
-require('mason-lspconfig').setup()
 
 -- default required servers for my usecase
 local servers = {
 	lua_ls = {
 		Lua = {
-			workspace = { checkThirdParty = false },
-			telemetry = { enable = false },
+			runtime = {
+				version = "LuaJIT",
+			},
+			diagnostics = {
+				globals = { "vim" },
+			},
+			workspace = {
+				checkThirdParty = false,
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
+			telemetry = {
+				enable = false,
+			},
+
 		},
 	},
 }
@@ -65,22 +76,27 @@ require('neodev').setup()
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
--- make sure we install the required servers
-local mason_config = require 'mason-lspconfig'
-mason_config.setup {
-	ensure_installed = vim.tbl_keys(servers),
+vim.lsp.config('*', {
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+vim.lsp.config('lua_ls', {
+	settings = servers.lua_ls,
+})
+
+local mason_lspconfig = require('mason-lspconfig')
+mason_lspconfig.setup {
+	ensure_installed = vim.tbl_keys(servers)
 }
 
-mason_config.setup_handlers {
-	function(server_name)
-		require('lspconfig')[server_name].setup {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			settings = servers[server_name],
-			filetypes = (servers[server_name] or {}).filetypes,
-		}
-	end,
-}
+for _, server_name in ipairs(mason_lspconfig.get_installed_servers()) do
+	vim.lsp.config(server_name, {
+		capabilities = capabilities,
+		on_attach = on_attach,
+		settings = servers[server_name],
+	})
+end
 
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
@@ -111,7 +127,7 @@ cmp.setup {
 			else
 				fallback()
 			end
-		end, {'i', 's'}),
+		end, { 'i', 's' }),
 		['<S-Tab>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
@@ -120,7 +136,7 @@ cmp.setup {
 			else
 				fallback()
 			end
-		end, {'i', 's'}),
+		end, { 'i', 's' }),
 	},
 	sources = {
 		{ name = 'nvim_lsp' },

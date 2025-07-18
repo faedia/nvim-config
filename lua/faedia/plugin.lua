@@ -80,7 +80,6 @@ require('lazy').setup({
 	-- telescope fuzzy finding
 	{
 		'nvim-telescope/telescope.nvim',
-		branch = '0.1.x',
 		dependencies = {
 			'nvim-lua/plenary.nvim',
 			{
@@ -107,6 +106,7 @@ require('lazy').setup({
 		build = "cd app && yarn install",
 		init = function()
 			vim.g.mkdp_filetypes = { "markdown" }
+			vim.g.mkdp_auto_close = 0
 		end,
 		ft = { 'markdown' },
 	},
@@ -114,7 +114,20 @@ require('lazy').setup({
 	-- add a better file tree.
 	{
 		'stevearc/oil.nvim',
-		opts = {},
+		---@module 'oil'
+		---@type oil.SetupOpts
+		opts = {
+			view_options = {
+				show_hidden = true
+			}
+		},
+
+		dependencies = {
+			{
+				"echasnovski/mini.icons",
+				opts = {},
+			},
+		},
 		lazy = false,
 	},
 }, {})

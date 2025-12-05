@@ -130,4 +130,31 @@ require('lazy').setup({
 		},
 		lazy = false,
 	},
+
+	-- copilot support.
+	{
+		'github/copilot.vim',
+	},
+
+	-- Doxygen support.
+	{
+		'danymat/neogen',
+		config = function()
+			require('neogen').setup({
+				snippet_engine = 'luasnip',
+				languages = {
+					c = {
+						template = {
+							annotation_convention = 'doxygen',
+						},
+					},
+					cpp = {
+						template = {
+							annotation_convention = 'doxygen',
+						},
+					},
+				},
+			})
+		end,
+	},
 }, {})

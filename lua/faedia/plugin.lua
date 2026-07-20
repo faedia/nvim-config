@@ -93,10 +93,13 @@ require('lazy').setup({
 	-- add treesitter. Better highlight, edit and code navigation
 	{
 		'nvim-treesitter/nvim-treesitter',
-		dependencies = {
-			'nvim-treesitter/nvim-treesitter-textobjects',
-		},
+		lazy = false,
 		build = ':TSUpdate',
+	},
+
+	{
+		'nvim-treesitter/nvim-treesitter-textobjects',
+		branch = "main"
 	},
 
 	-- add markdown preview support

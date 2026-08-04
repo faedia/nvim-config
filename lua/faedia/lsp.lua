@@ -1,10 +1,11 @@
+local Snacks = require('snacks.picker')
+
 -- setup diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 
-local t_builtin = require 'telescope.builtin'
-vim.keymap.set('n', '<leader>q', t_builtin.diagnostics, { desc = 'Open diagnostic list'})
+vim.keymap.set('n', '<leader>q', Snacks.diagnostics, { desc = 'Open diagnostic list'})
 
 -- configure LSP
 -- this gets run when an LSP connects to a buffer
@@ -20,13 +21,16 @@ local on_attach = function(_, bufnr)
 	nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 	nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-	-- TODO: telescope sets for lsp
-	nmap('gd', t_builtin.lsp_definitions, '[G]oto [D]efinition')
-	nmap('gr', t_builtin.lsp_references, '[G]oto [R]eferences')
-	nmap('gI', t_builtin.lsp_implementations, '[G]oto [I]mplementation')
-	nmap('<leader>D', t_builtin.lsp_type_definitions, 'Type [D]efinition')
-	nmap('<leader>ds', t_builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
-	nmap('<leader>ws', t_builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+	nmap('gd', Snacks.lsp_definitions, '[G]oto [D]efinition')
+	nmap('gr', Snacks.lsp_references, '[G]oto [R]eferences')
+	nmap('gI', Snacks.lsp_implementations, '[G]oto [I]mplementation')
+	nmap('<leader>D', Snacks.lsp_type_definitions, 'Type [D]efinition')
+
+	nmap('gic', Snacks.lsp_incoming_calls, '[G]et [I]ncoming [C]alls')
+	nmap('goc', Snacks.lsp_outgoing_calls, '[G]et [O]utgoing [C]alls')
+
+	nmap('<leader>ds', Snacks.lsp_symbols, '[D]ocument [S]ymbols')
+	nmap('<leader>ws', Snacks.lsp_workspace_symbols, '[W]orkspace [S]ymbols')
 
 	-- setup basic keymaps
 	nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
